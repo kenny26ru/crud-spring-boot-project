@@ -4,13 +4,11 @@ import com.project.crudspringbootproject.model.Role;
 import com.project.crudspringbootproject.model.User;
 import com.project.crudspringbootproject.repository.RoleRepository;
 import com.project.crudspringbootproject.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 @Controller
 public class AdminController {
@@ -23,7 +21,7 @@ public class AdminController {
     }
 
     @GetMapping("/admin/users")
-    public String allUsers(Model model){
+    public String allUsers(Model model) {
         List<User> userList = userService.allUsers();
         model.addAttribute("users", userList);
         return "admin/userList";
@@ -62,7 +60,7 @@ public class AdminController {
 //    }
 
     @GetMapping("admin/delete/{id}")
-    public String deleteUser(@PathVariable("id") Long id){
+    public String deleteUser(@PathVariable("id") Long id) {
 //        User user = userService.getUserById(id);
         userService.delete(id);
         return "redirect:/admin/users";
