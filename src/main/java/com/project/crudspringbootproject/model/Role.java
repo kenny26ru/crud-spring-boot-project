@@ -1,6 +1,5 @@
 package com.project.crudspringbootproject.model;
 
-//import lombok.Data;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
@@ -8,7 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 import javax.persistence.*;
 import java.util.Set;
 
-//@Data
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
@@ -63,9 +61,6 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String toString() {
-        return "Role{" +
-                "id=" + id +
-                ", roleName='" + roleName + '\'' +
-                '}';
+        return roleName;
     }
 }

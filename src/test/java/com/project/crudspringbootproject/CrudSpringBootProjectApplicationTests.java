@@ -8,9 +8,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,14 +35,48 @@ class CrudSpringBootProjectApplicationTests {
 	void contextLoads() {
 	}
 
+//	@Test
+//	void newUser() {
+//		User user = new User();
+//		user.setFirstName("Test");
+//		user.setSecondName("Servovich");
+//		user.setAge(25);
+//		user.setEmail("test@mail.ru");
+//		user.setPassword(passwordEncoder.encode("test"));
+//		Set<Role> roles = new HashSet<>();
+//		roles.add(roleRepository.findRoleByRoleName("USER"));
+//		user.setRoleSet(roles);
+//		userService.create(user);
+//	}
+
+//	@Test
+//	void adminRole() {
+//		User user = userService.findUserByEmail("admin@mail.ru");
+//		Set<Role> roles = new HashSet<>();
+//		roles.add(roleRepository.findRoleByRoleName("USER"));
+//		user.setRoleSet(roles);
+//		userService.create(user);
+//	}
+
 	@Test
-	void readUser() {
+	void add() {
 		User user = new User();
-		user.setName("test1");
-		user.setPassword(passwordEncoder.encode("test1"));
+		user.setName("admin");
+		user.setSecondName("Adminovich");
+		user.setEmail("admin@mail.ru");
+		user.setAge(15);
+		user.setPassword(passwordEncoder.encode("admin"));
 		Set<Role> roles = new HashSet<>();
-		roles.add(roleRepository.findRoleByRoleName("ROLE_USER"));
+		roles.add(roleRepository.findRoleByRoleName("ROLE_ADMIN"));
 		user.setRoleSet(roles);
 		userService.create(user);
+		System.out.println(user);
 	}
-}
+
+	@Test
+	void load(Principal p){
+		UserDetails user = userService.findUserByName(p.getName());
+		System.out.println(user.getAuthorities());
+		System.out.println(user.getUsername());
+	}
+ }

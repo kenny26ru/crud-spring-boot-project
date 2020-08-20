@@ -8,7 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class AdminController {
@@ -20,25 +22,29 @@ public class AdminController {
         this.roleRepository = roleRepository;
     }
 
-    @GetMapping("/admin/users")
-    public String allUsers(Model model) {
+    @GetMapping("/admin/admin")
+    public String allUsers(Principal p, Model model) {
+        User user = userService.findUserByName(p.getName());
+        Set<Role> roles = user.getRoleSet();
         List<User> userList = userService.allUsers();
+        model.addAttribute("roles", roles);
+        model.addAttribute("user", user);
         model.addAttribute("users", userList);
-        return "admin/userList";
+        return "admin/adminPage";
     }
 
     @GetMapping(value = "/admin/add")
     public String addUserFrom(User user, Model model) {
         List<Role> roleSet = roleRepository.findAll();
         model.addAttribute("roles", roleSet);
-        model.addAttribute("user", user);
+        model.addAttribute("newUser", user);
         return "admin/addPage";
     }
 
     @PostMapping("/admin/add")
     public String addUser(User user) {
         userService.create(userService.encodePassword(user));
-        return "redirect:/admin/users";
+        return "redirect:/admin/admin";
     }
 
     @GetMapping("/admin/edit/{id}")
@@ -51,18 +57,12 @@ public class AdminController {
     @PostMapping("/admin/edit")
     public String editUser(User user) {
         userService.create(user);
-        return "redirect:/admin/users";
+        return "redirect:/admin/admin";
     }
-
-//    @PostMapping
-//    public String editUser(User user){
-//        userService.
-//    }
 
     @GetMapping("admin/delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
-//        User user = userService.getUserById(id);
         userService.delete(id);
-        return "redirect:/admin/users";
+        return "redirect:/admin/admin";
     }
 }

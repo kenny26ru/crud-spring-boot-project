@@ -1,6 +1,5 @@
 package com.project.crudspringbootproject.model;
 
-//import lombok.Data;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,22 +9,25 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
 
-//@Data
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String email;
+
+    @Column(name = "f_name")
     private String name;
+
+    @Column(name = "s_name")
+    private String secondName;
+
+    private int age;
+
     private String password;
 
-//    @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
-//    @JoinTable(
-//            name = "user_role",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "role_id")
-//    )
     @ManyToMany
     @JoinTable
     @Fetch(FetchMode.JOIN)
@@ -34,11 +36,40 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(Long id, String name, String password, Set<Role> roleSet) {
+    public User(Long id, String email,
+                String name, String secondName,
+                int age, String password, Set<Role> roleSet) {
         this.id = id;
+        this.email = email;
         this.name = name;
+        this.secondName = secondName;
+        this.age = age;
         this.password = password;
         this.roleSet = roleSet;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSecondName() {
+        return secondName;
+    }
+
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public Long getId() {
@@ -49,12 +80,12 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getEmail() {
+        return email;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setPassword(String password) {
@@ -104,5 +135,12 @@ public class User implements UserDetails {
         return true;
     }
 
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + email + '\'' +
+                ", roleSet=" + roleSet +
+                '}';
+    }
 }
