@@ -47,7 +47,7 @@ public class Role implements GrantedAuthority {
     }
 
     public Set<User> getUserSet() {
-        return userSet;
+         return userSet;
     }
 
     public void setUserSet(Set<User> userSet) {
