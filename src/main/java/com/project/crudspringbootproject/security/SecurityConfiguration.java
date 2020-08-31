@@ -1,6 +1,5 @@
 package com.project.crudspringbootproject.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,12 +32,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .formLogin()
-                    .successHandler(successUserHandler);
+                .successHandler(successUserHandler);
 
         http
                 .authorizeRequests()
-                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
-                .antMatchers("/user/**").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')");
+                .antMatchers("/admin/**").access("hasAuthority('ADMIN')")
+                .antMatchers("/user/**").access("hasAnyAuthority('USER','ADMIN')")
+                .antMatchers("/static/**").permitAll();
+
+        http.csrf().disable();
 
         http.logout();
     }

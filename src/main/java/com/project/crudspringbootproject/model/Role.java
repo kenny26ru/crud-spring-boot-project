@@ -1,5 +1,7 @@
 package com.project.crudspringbootproject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,6 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "roles")
+@JsonIgnoreProperties({"userSet"})
 public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +20,7 @@ public class Role implements GrantedAuthority {
     @Column(name = "role_name")
     private String roleName;
 
+    @JsonProperty("userSet")
     @ManyToMany(mappedBy = "roleSet")
     @Fetch(FetchMode.JOIN)
     private Set<User> userSet;
@@ -28,6 +32,10 @@ public class Role implements GrantedAuthority {
         this.id = id;
         this.roleName = roleName;
         this.userSet = userSet;
+    }
+
+    public Role(Long roleId) {
+        this.id = roleId;
     }
 
     public Long getId() {
@@ -47,7 +55,7 @@ public class Role implements GrantedAuthority {
     }
 
     public Set<User> getUserSet() {
-         return userSet;
+        return userSet;
     }
 
     public void setUserSet(Set<User> userSet) {

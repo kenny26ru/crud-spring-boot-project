@@ -35,29 +35,6 @@ class CrudSpringBootProjectApplicationTests {
 	void contextLoads() {
 	}
 
-//	@Test
-//	void newUser() {
-//		User user = new User();
-//		user.setFirstName("Test");
-//		user.setSecondName("Servovich");
-//		user.setAge(25);
-//		user.setEmail("test@mail.ru");
-//		user.setPassword(passwordEncoder.encode("test"));
-//		Set<Role> roles = new HashSet<>();
-//		roles.add(roleRepository.findRoleByRoleName("USER"));
-//		user.setRoleSet(roles);
-//		userService.create(user);
-//	}
-
-//	@Test
-//	void adminRole() {
-//		User user = userService.findUserByEmail("admin@mail.ru");
-//		Set<Role> roles = new HashSet<>();
-//		roles.add(roleRepository.findRoleByRoleName("USER"));
-//		user.setRoleSet(roles);
-//		userService.create(user);
-//	}
-
 	@Test
 	void add() {
 		User user = new User();
@@ -67,7 +44,22 @@ class CrudSpringBootProjectApplicationTests {
 		user.setAge(15);
 		user.setPassword(passwordEncoder.encode("admin"));
 		Set<Role> roles = new HashSet<>();
-		roles.add(roleRepository.findRoleByRoleName("ROLE_ADMIN"));
+		roles.add(roleRepository.findRoleByRoleName("ADMIN"));
+		user.setRoleSet(roles);
+		userService.create(user);
+		System.out.println(user);
+	}
+
+	@Test
+	void addTest() {
+		User user = new User();
+		user.setName("test");
+		user.setSecondName("Testovich");
+		user.setEmail("test@mail.ru");
+		user.setAge(15);
+		user.setPassword(passwordEncoder.encode("test"));
+		Set<Role> roles = new HashSet<>();
+		roles.add(roleRepository.findRoleByRoleName("USER"));
 		user.setRoleSet(roles);
 		userService.create(user);
 		System.out.println(user);

@@ -48,6 +48,8 @@ public class User implements UserDetails {
         this.roleSet = roleSet;
     }
 
+
+
     public String getName() {
         return name;
     }
@@ -139,7 +141,11 @@ public class User implements UserDetails {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + email + '\'' +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", secondName='" + secondName + '\'' +
+                ", age=" + age +
+                ", password='" + password + '\'' +
                 ", roleSet=" + roleSet +
                 '}';
     }
